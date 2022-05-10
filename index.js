@@ -198,7 +198,22 @@ app.patch('/user/update/:username', (req, res) => {
     
    
 })
+/* Delete - Delete method */
+app.delete('/user/delete/:username', (req, res) => {
 
+
+    const username = req.params.username
+    //finding blog by username and deleting the blog
+     Users.deleteOne({email :username}).then(data=>{
+        // deleting blog
+       return  res.send({success: true, msg: 'user removed successfully'})
+    }).catch(err=>{
+        return  res.send({success: true, msg: 'user removed successfully'})
+        // return res.status(409).send({error: true, msg: 'user with username does not exist'})
+    }) 
+    
+    
+})
 /* util functions */
 //read the user data from json file
 const saveUserData = (data) => {
