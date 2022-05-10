@@ -25,10 +25,12 @@ mongodb.mongoose
 const Users = mongodb.Users;
 app.use(express.json()); // Used to parse JSON bodies
 app.use(express.urlencoded()); //Parse URL-encoded bodies
-
+var corsOptions = {
+    origin: "*",
+};
 //this line is required to parse the request body
 app.use(express.json())
-app.use(cors())
+app.use(cors(corsOptions))
 
 // set view engine
 app.set("view engine", "ejs")
