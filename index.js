@@ -181,6 +181,23 @@ app.get('/user/list', (req, res) => {
 
 
 
+/* Update - Patch method */
+app.patch('/user/update/:username', (req, res) => {
+  
+    
+      //get the id from url
+  const username = req.params.username
+  //get the update data
+  const user = req.body
+    Users.update({username:username},user).then(data=>{
+            res.send(data)
+        }).catch(err=>{
+            return res.status(409).send({error: true, msg: 'user id not exist'})
+        })
+    // res.redirect('/')
+    
+   
+})
 
 /* util functions */
 //read the user data from json file
