@@ -38,6 +38,36 @@ app.set("view engine", "ejs")
 app.use(express.static('assets'));
 
 
+app.get('/', (req, res) => {
+    axios.get(backendUrl+"/user/list")
+        .then(function(response){
+            res.render('index', { users : response.data });
+        })
+        .catch(err =>{
+            res.send(err);
+        })
+
+})
+
+
+/* Read - GET method */
+app.get('/user/list', (req, res) => {
+    
+ 
+    // fetching All the users from database
+   Users.find()
+   .then(data => {
+       res.send(data)
+   })
+   .catch(err => {
+       res.status(500).send({
+       message:
+           err.message || "Some error occurred while retrieving All users."
+       });
+   });
+
+})
+
 
 
 let port = process.env.PORT || 3000
