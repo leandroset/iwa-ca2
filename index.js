@@ -49,10 +49,48 @@ app.get('/', (req, res) => {
 
 })
 
+app.get('/update-user/', (req, res) => {
+    axios.get(backendUrl+'/update-user/:username')
+        .then(function(response){
+            //console.log(finds)
+           res.render('update_user', {username: req.query.username,
+            age: req.query.age,
+            fullname: req.query.fullname,
+            password: req.query.password})
+            
+        })
+        .catch(err =>{
+            res.send(err);
+        })
+
+})
 
 
 
 
+
+app.get('/update-user/:username', (req, res)=> {
+
+      
+      const username = req.params.username
+
+      //check if it exists    
+      Users.find({username:username}).then(data => {
+          if(data){
+                  res.send(data[0])     
+          }else{ 
+              res.status(404).send({ message : "No User With username ["+ username+"]"})
+              
+          }
+      })
+      .catch(err => {
+          res.status(500).send({
+          message:
+              err.message || " Error Occured"
+          });
+      });
+
+})
 
 
 
@@ -120,6 +158,28 @@ app.get('/user/list', (req, res) => {
    });
 
 })
+
+
+
+// app.get('/update/:username', (req,res) =>{
+
+//     //get the username from url
+//     const username = req.params.username
+//     //get the update data
+   
+//     const existUsers = getUserData()
+//     //check if the username exist or not       
+//     const findExist = existUsers.find( user => user.username === username )
+//     if (!findExist) {
+//         return res.status(409).send({error: true, msg: 'username not exist'})
+//     }
+//     else{
+//         res.send(findExist);
+
+//     }
+// })
+
+
 
 
 /* util functions */
