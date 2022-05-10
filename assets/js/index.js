@@ -17,7 +17,7 @@ $("#update_user").submit(function(event){
 
 
     var request = {
-        "url" : `http://localhost:3000/user/update/${data.username}`,
+        "url" : `https://student-management-portal-ca2.herokuapp.com/user/update/${data.username}`,
         "method" : "PATCH",
         "data" : data
     }
@@ -34,7 +34,7 @@ if(window.location.pathname == "/"){
         var username = $(this).attr("data-id")
 
         var request = {
-            "url" : `http://localhost:3000/user/delete/${username}`,
+            "url" : `https://student-management-portal-ca2.herokuapp.com/user/delete/${username}`,
             "method" : "DELETE"
         }
 
