@@ -50,6 +50,59 @@ app.get('/', (req, res) => {
 })
 
 
+
+
+
+
+
+
+/* Create - POST method */
+app.post('/user/add', (req, res) => {
+
+  
+// //get the existing user data
+
+
+  //get data
+
+  const user = req.body
+
+  // Finding Out if blog with given BlogId Already Exists
+  Users.find({username: user.username})
+  .then(users => {
+      // looking for blog data if already exists
+      if (users && users.length) {
+          return res.status(409).send({error: true, msg: 'username already exist'})
+      }else{
+          let newUser =new Users(user)
+          newUser
+          .save(newUser)
+          .then(data => {
+              res.redirect('/');
+
+          })
+          .catch(err => {
+          res.status(500).send({
+              message:
+              err.message || "Some error occurred while creating the User."
+          });
+          });
+      }
+
+
+  })
+  .catch(err => {
+      res.status(500).send({
+      message:
+          err.message || "Some error occurred while retrieving User."
+      });
+  });
+
+})
+
+
+
+
 /* Read - GET method */
 app.get('/user/list', (req, res) => {
     
@@ -66,6 +119,25 @@ app.get('/user/list', (req, res) => {
        });
    });
 
+})
+
+
+/* util functions */
+//read the user data from json file
+const saveUserData = (data) => {
+    
+    const stringifyData = JSON.stringify(data)
+    fs.writeFileSync('users.json', stringifyData)
+}
+//get the user data from json file
+const getUserData = () => {
+    const jsonData = fs.readFileSync('users.json')
+    return JSON.parse(jsonData)    
+}
+
+//routing
+app.get('/add-user', (req, res) =>{
+    res.render('add_user')
 })
 
 
